@@ -1,4 +1,4 @@
-from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
+from plotly.offline import init_notebook_mode, iplot, plot
 from IPython.display import display, HTML
 
 import pandas as pd
@@ -136,5 +136,6 @@ for year in years:
 
     
 figure['layout']['sliders'] = [sliders_dict]
+
 
 plot(figure)
