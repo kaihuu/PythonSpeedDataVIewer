@@ -5,6 +5,9 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 import datetime
+from pytz import timezone
+
+jp = timezone('Asia/Tokyo')
 
 plotly.tools.set_credentials_file(username='kaihuu', api_key='znMv1Ngj0FwLt4HcoZbb')
 
@@ -14,8 +17,9 @@ district = dbac.DBAccessor.TimeDistinctDataQuery()
 
 nptime = np.array(district)
 npspeed = np.array(speed)
+    
 
-datatypes = ['LEAFSPY_Speed1','LEAFSPY_Speed2', 'AT570', 'BEAT']
+datatypes = ['LEAFSPY_Speed1','LEAFSPY_Speed2', 'AT570', 'BEAT', 'Nexus7']
 
 data = []
 # make data
@@ -34,6 +38,11 @@ for datatype in datatypes:
         npspeedBEAT = npspeed[npspeed[:,1] == 28]
         xdata = npspeedBEAT[:,0]
         ydata = npspeedBEAT[:,2]
+    elif datatype == 'Nexus7':
+        npspeedBEAT = npspeed[npspeed[:,1] == 18]
+        xdata = npspeedBEAT[:,0]
+        ydata = npspeedBEAT[:,2]
+
 
     trace = go.Scatter(
                 x=xdata,
@@ -44,7 +53,8 @@ for datatype in datatypes:
     data.append(trace)
 
 layout = dict(
-    title = "Speed Data"
+    title = "Speed Data",
+    font = dict(size=30)
 )
 
 fig = dict(data=data, layout=layout)
